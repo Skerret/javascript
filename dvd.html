@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-EN">
+    <head>
+        <title>dvd</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="600" height="400" style="border: 5px solid black"></canvas>
+        <script>
+
+            const canvas = document.getElementById("canvas");
+            let ctx = canvas.getContext("2d");
+            let blockWidth = 40;
+
+            let newXVal;
+            let newYVal;
+
+            let step = 1;
+
+            let block = new Block(50, 240, blockWidth, blockWidth, step, step);
+
+            let update = () => {
+                ctx.fillStyle="white";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle="black";
+
+                let newXVal = block.x + block.xv;
+                let newYVal = block.y + block.yv;
+
+                let xCorner = false;
+                let yCorner = false;
+
+                if(newXVal <= 0 || newXVal >= canvas.width - blockWidth) {
+                    block.xv *= -1;
+                    xCorner = true;
+                }
+                if(newYVal <= 0 || newYVal >= canvas.height - blockWidth) {
+                    block.yv *= -1;
+                    yCorner = true;
+                }
+
+                if(xCorner && yCorner) {
+                    console.log('corner');
+                }
+
+
+                block.x += block.xv;
+                block.y += block.yv;
+
+                block.draw();
+            }
+
+            let interval = setInterval(function() {
+                update();
+            }, 1);
+
+            function Block(_ox, _oy, _w, _h, _xv, _yv) {
+                this.x = _ox;
+                this. y = _oy;
+                this.width = _w;
+                this.height = _h;
+                this.xv = _xv;
+                this. yv = _yv;
+
+                this.draw = function() {
+                    ctx.fillRect(this.x, this.y, this.width, this.height);    
+                }
+            }
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en-EN">
+    <head>
+        <title>Snake</title>
+        <Style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            #canvas {
+                background-color: black;
+            }
+        </Style>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="400">Canvas not supported</canvas>
+        <p id="score">0</p>
+        <script>
+            const canvas = document.getElementById("canvas");
+            let ctx = canvas.getContext("2d");
+
+            let grid = 16;
+            let count = 0;
+            let score = 0;
+
+            let r = (min, max) => Math.floor(Math.random() * (max - min)) + min;
+
+            let snake = {
+                x: 128,
+                y: 128,
+                vx: grid,
+                vy: 0,
+                cells: [],
+                cellCount: 5
+            };
+            let apple = {
+                x: r(0, 25) * grid,
+                y: r(0, 25) * grid
+            }
+
+            let update = () => {
+                count++;
+                if(count < 2) {
+                    return;
+                }
+                count = 0;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                snake.x += snake.vx;
+                snake.y += snake.vy;
+
+
+                snake.x = snake.x < 0 ? canvas.width - grid : snake.x >= canvas.width ? 0 : snake.x;
+                snake.y = snake.y < 0 ? canvas.height - grid : snake.y >= canvas.height ? 0 : snake.y;
+
+                snake.cells.unshift({x: snake.x, y: snake.y});
+
+                if(snake.cells.length > snake.cellCount) {
+                    snake.cells.pop();
+                }
+
+                ctx.fillStyle="red";
+                ctx.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+
+                ctx.fillStyle='green';
+
+                for(i = 0; i < snake.cells.length; i++) {
+                    ctx.fillRect(snake.cells[i].x, snake.cells[i].y, grid - 1, grid - 1);
+
+                    if(snake.cells[i].x == apple.x && snake.cells[i].y == apple.y) {
+                        snake.cellCount++;
+                        apple.x = r(0, 25) * grid;
+                        apple.y = r(0, 25) * grid;
+                        score++;
+                    }
+
+                    for(k = i + 1; k < snake.cells.length; k++) {
+                        if(snake.cells[i].x == snake.cells[k].x && snake.cells[i].y == snake.cells[k].y) {
+                            clearInterval(interval);
+                            console.log('you lost!');
+                        }
+                    }
+                }
+                document.getElementById("score").innerHTML="Score: " + score;
+            }
+
+            document.addEventListener('keydown',function(_e) {
+                if(_e.which == 37 && snake.vx == 0) {
+                    snake.vx = -grid;
+                    snake.vy = 0;
+                } else if(_e.which == 38 && snake.vy == 0) {
+                    snake.vx = 0;
+                    snake.vy = -grid;
+                } else if(_e.which == 39 && snake.vx == 0) {
+                    snake.vx = grid;
+                    snake.vy = 0;
+                } else if(_e.which == 40 && snake.vy == 0) {
+                    snake.vx = 0;
+                    snake.vy = grid;
+                }
+            });
+
+            let interval = setInterval(update, 60);
+        </script>
+    </body>
+</html>

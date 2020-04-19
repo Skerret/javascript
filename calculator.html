@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en-EN">
+    <head>
+        <title>Calculator</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+	<style>
+	body {
+    margin: 0;
+    padding: 0;
+    background-color: #cccccc;
+    font-family: 'Roboto';
+}
+
+#container {
+    width: 300px;
+    height: 500px;
+    margin: 70px auto 0px;
+    background-color: rgb(139, 139, 139);
+}
+
+#input {
+    text-align: right;
+    font-size: 40pt;
+    width: 280px;
+    margin: 10px;
+    cursor: default;
+    outline: none;
+}
+
+#input:disabled {
+    background-color: white;
+}
+
+.num {
+    width: 60px;
+    margin: 6px;
+    height: 60px;
+    font-size: 23pt;
+    cursor: pointer;
+    background-color: rgb(69, 196, 212);
+    border: 3px solid black;
+    transition: all 0.25s;
+    outline: none;
+}
+
+.num:hover {
+    background-color: rgb(54, 157, 170);
+}
+
+.num:active {
+    border-radius: 50%;
+}
+	</style>
+    </head>
+    <body>
+        <div id="container">
+            <input type="text" maxlength="0" id="input">
+            <div id="pad">
+                <button type="button" onclick="add(1)" class="num">1</button>
+                <button type="button" onclick="add(2)" class="num">2</button>
+                <button type="button" onclick="add(3)" class="num">3</button>
+                <button type="button" onclick="add('+')" class="num">+</button>
+                <button type="button" onclick="add(4)" class="num">4</button>
+                <button type="button" onclick="add(5)" class="num">5</button>
+                <button type="button" onclick="add(6)" class="num">6</button>
+                <button type="button" onclick="add('-')" class="num">-</button>
+                <button type="button" onclick="add(7)" class="num">7</button>
+                <button type="button" onclick="add(8)" class="num">8</button>
+                <button type="button" onclick="add(9)" class="num">9</button>
+                <button type="button" onclick="add('*')" class="num">*</button>
+                <button type="button" onclick="add('#')" class="num">#</button>
+                <button type="button" onclick="add(0)" class="num">0</button>
+                <button type="button" onclick="add('/')" class="num">/</button>
+                <button type="button" onclick="add('=')" class="num">=</button>
+                <button type="button" onclick="clearAll();" class="num" style="width: 290px">Clear</button>
+            </div>
+        </div>
+        <script>
+let operation;
+let input = document.getElementById("input");
+
+let add = n => {
+    operation = n == '+' ? '+' : n == '-' ? '-' : n == '*' ? '*' : n == '/' ? '/' : operation;
+    if(n == '=') {
+        if(operation == '+') {
+            let raw = input.value;
+            let result = raw.split('+')[0] * 1 + raw.split('+')[1] * 1;
+            input.value = result;
+        } else if(operation == '-') {
+            let raw = input.value;
+            let result = raw.split('-')[0] * 1 - raw.split('-')[1] * 1;
+            input.value = result;
+        } else if(operation == '*') {
+            let raw = input.value;
+            let result = raw.split('*')[0] * raw.split('*')[1];
+            input.value = result;
+        } else if(operation == '/') {
+            let raw = input.value;
+            let result = raw.split('/')[0] * 1 / raw.split('/')[1] * 1;
+            input.value = result;
+        }
+    } else {
+        input.value += n + '';
+    }
+}
+
+let clearAll = () => {
+    operation = '';
+    input.value = '';
+}
+</script>
+    </body>
+</html>

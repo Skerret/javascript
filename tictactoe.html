@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-EN">
+    <head>
+        <title>Tic Tac Toe</title>
+        <link href="http://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <style>
+            body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+    background-color: #555555;
+}
+
+#container {
+    background-color: white;
+    width: 400px;
+    height: 500px;
+    margin: Calc(50vh - 500px / 2) auto;
+    border-radius: 22px;
+    text-align: center;
+}
+
+#header {
+    font-size: 40pt;
+    text-align: center;
+    background-color: #3b3b3b;
+    color: white;
+    border-radius: 20px 20px 0px 0px;
+}
+#field {
+    font-size: 0pt;
+}
+
+.grid {
+    width: 110px;
+    height: 100px;
+    display: inline-block;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 20pt;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.grid:hover {
+    background-color: rgba(0, 0, 0, 0.199);
+}
+
+.grid:nth-child(1) {
+    border-right: 5px solid black;
+}
+.grid:nth-child(2) {
+    border-right: 5px solid black;
+}
+.grid:nth-child(4) {
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    border-right: 5px solid black;
+}
+.grid:nth-child(5) {
+    border-top: 5px solid black;
+    border-right: 5px solid black;
+    border-bottom: 5px solid black;
+}
+.grid:nth-child(6) {
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+.grid:nth-child(7) {
+    border-right: 5px solid black;
+}
+.grid:nth-child(8) {
+    border-right: 5px solid black;
+}
+
+.grid-text {
+    display: inline-block;
+}
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <h1 id="header">Tic Tac Toe</h1>
+            <div id="field">
+                <div class="grid" onclick="check(0)"><span class="grid-text"></span></div>
+                <div class="grid" onclick="check(1)"><span class="grid-text"></span></div>
+                <div class="grid" onclick="check(2)"><span class="grid-text"></span></div>
+                <div class="grid" onclick="check(3)"><span class="grid-text"></span></div>
+                <div class="grid" onclick="check(4)"><span class="grid-text"></span></div>
+                <div class="grid" onclick="check(5)"><span class="grid-text"></span></div>
+                <div class="grid" onclick="check(6)"><span class="grid-text"></span></div>
+                <div class="grid" onclick="check(7)"><span class="grid-text"></span></div>
+                <div class="grid" onclick="check(8)"><span class="grid-text"></span></div>
+            </div>
+        </div>
+        <script>
+            let grids = document.getElementsByClassName("grid");
+let gridSpans = document.getElementsByClassName("grid-text");
+
+let turn = 1; //turn 0: o, turn 1: x
+
+let win = () => {
+    let winner = turn == 1 ? "O" : turn == 0 ? "X" : "Error";
+    document.getElementById("header").innerHTML = winner + " has won!";
+
+    for(k = 0; k < grids.length; k++) {
+        grids[k].onclick = function(){};
+    }
+}
+
+let checkWin = () => {
+    for(i = 0; i < gridSpans.length; i++) {
+        if(gridSpans[i] && gridSpans[i + 1] && gridSpans[i + 2]) {
+            if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 1].innerHTML && gridSpans[i + 1].innerHTML == gridSpans[i + 2].innerHTML) {
+                win();
+            }
+        }
+        if(gridSpans[i] && gridSpans[i + 3] && gridSpans[i + 6]) {
+            if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 3].innerHTML && gridSpans[i + 3].innerHTML == gridSpans[i + 6].innerHTML) {
+                win();
+            }
+        }
+        if(gridSpans[i] && gridSpans[i + 4] && gridSpans[i + 8]) {
+            if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 4].innerHTML && gridSpans[i + 4].innerHTML == gridSpans[i + 8].innerHTML) {
+                win();
+            }
+        }
+        if(gridSpans[i] && gridSpans[i + 2] && gridSpans[i + 4]) {
+            if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 2].innerHTML && gridSpans[i + 2].innerHTML == gridSpans[i + 4].innerHTML) {
+                win();
+            }
+        }
+    }
+}
+
+let check = gridNumber => {
+    if(gridSpans[gridNumber].innerHTML != "") {
+        return;
+    } else {
+        if(turn == 1) {
+            gridSpans[gridNumber].innerHTML="X";
+        } else if(turn == 0) {
+            gridSpans[gridNumber].innerHTML="O";
+        } else {
+            console.error("Something went wrong");
+        }
+        turn = !turn;
+    }
+
+    checkWin();
+}
+        </script>
+    </body>
+</html>

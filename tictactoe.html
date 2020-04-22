@@ -97,10 +97,13 @@
 let gridSpans = document.getElementsByClassName("grid-text");
 
 let turn = 1; //turn 0: o, turn 1: x
+            let winBool = false;
 
 let win = () => {
     let winner = turn == 1 ? "O" : turn == 0 ? "X" : "Error";
     document.getElementById("header").innerHTML = winner + " has won!";
+    
+    winBool = true;
 
     for(k = 0; k < grids.length; k++) {
         grids[k].onclick = function(){};
@@ -143,7 +146,7 @@ let checkWin = () => {
         if(gridSpans[i].innerHTML != "") {
             filledGrids++;
         }
-        if(filledGrids == 9) {
+        if(filledGrids == 9 && !winBool) {
             document.getElementById("header").innerHTML="Tie!";
         }
     }

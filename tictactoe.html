@@ -109,25 +109,42 @@ let win = () => {
 
 let checkWin = () => {
     for(i = 0; i < gridSpans.length; i++) {
-        if(gridSpans[i] && gridSpans[i + 1] && gridSpans[i + 2]) {
-            if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 1].innerHTML && gridSpans[i + 1].innerHTML == gridSpans[i + 2].innerHTML) {
-                win();
+        if(i == 0 || i == 3 || i == 6) {
+            if(gridSpans[i] && gridSpans[i + 1] && gridSpans[i + 2]) {
+                if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 1].innerHTML && gridSpans[i + 1].innerHTML == gridSpans[i + 2].innerHTML) {
+                    win();
+                }
             }
         }
-        if(gridSpans[i] && gridSpans[i + 3] && gridSpans[i + 6]) {
-            if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 3].innerHTML && gridSpans[i + 3].innerHTML == gridSpans[i + 6].innerHTML) {
-                win();
+        if(i == 0 || i == 1 || i == 2) {
+            if(gridSpans[i] && gridSpans[i + 3] && gridSpans[i + 6]) {
+                if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 3].innerHTML && gridSpans[i + 3].innerHTML == gridSpans[i + 6].innerHTML) {
+                    win();
+                }
             }
         }
-        if(gridSpans[i] && gridSpans[i + 4] && gridSpans[i + 8]) {
-            if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 4].innerHTML && gridSpans[i + 4].innerHTML == gridSpans[i + 8].innerHTML) {
-                win();
+        if(i == 0) {
+            if(gridSpans[i] && gridSpans[i + 4] && gridSpans[i + 8]) {
+                if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 4].innerHTML && gridSpans[i + 4].innerHTML == gridSpans[i + 8].innerHTML) {
+                    win();
+                }
             }
         }
-        if(gridSpans[i] && gridSpans[i + 2] && gridSpans[i + 4]) {
-            if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 2].innerHTML && gridSpans[i + 2].innerHTML == gridSpans[i + 4].innerHTML) {
-                win();
+        if(i == 2) {
+            if(gridSpans[i] && gridSpans[i + 2] && gridSpans[i + 4]) {
+                if(gridSpans[i].innerHTML != "" && gridSpans[i].innerHTML == gridSpans[i + 2].innerHTML && gridSpans[i + 2].innerHTML == gridSpans[i + 4].innerHTML) {
+                    win();
+                }
             }
+        }
+    }
+    let filledGrids = 0;
+    for(i = 0; i < gridSpans.length; i++) {
+        if(gridSpans[i].innerHTML != "") {
+            filledGrids++;
+        }
+        if(filledGrids == 9) {
+            document.getElementById("header").innerHTML="Tie!";
         }
     }
 }

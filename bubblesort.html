@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-EN">
+    <head>
+        <title>Bubblesort</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="800" style="border: solid 2px black;"></canvas>
+        <script>
+            const canvas = document.getElementById("canvas");
+            let ctx = canvas.getContext("2d");
+
+            let numbers = [];
+
+            const isSorted = arr => arr.every((v, i, a) => !i || a[i - 1] <= v);
+
+            for(i = 1; i < 401; i++) {
+                numbers.push(i);
+            }
+            numbers.sort(() => Math.random() - 0.5);
+
+            let draw = current => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for(k = 0; k < numbers.length; k++) {
+                    ctx.fillStyle = k == current ? "red" : "black";
+                    ctx.fillRect(k, canvas.height - numbers[k] * 2, 1, numbers[k] * 2);
+                }
+            }
+
+            let swap = (arr, i1, i2) => {
+                let c = arr[i1];
+                arr[i1] = arr[i2];
+                arr[i2] = c;
+            }
+            let bubblesort = a => {
+                let i = 0;
+                let j = 0;
+
+                let interval = setInterval(function() {
+
+                    if(j >= a.length) {
+                        j = 0;
+                        i++;
+                    }
+
+                    if(a[j] > a[j + 1]) {
+                        swap(a, j, j + 1);
+                        console.log('swapp');
+                    }
+                    draw(j);
+
+                    j++;
+
+                    if(isSorted(numbers)) {
+                        clearInterval(interval);
+                    }
+                }, 0);
+            }
+            bubblesort(numbers);
+
+            draw();
+        </script>
+    </body>
+</html>
